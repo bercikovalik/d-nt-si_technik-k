@@ -5,6 +5,8 @@ from datetime import datetime
 import os
 import io
 import openpyxl
+import smtplib
+from email.message import EmailMessage
 
 df = pd.DataFrame({
     "Name": ["Anna", "Bence", "Csilla"],
@@ -25,11 +27,22 @@ valid_email = re.match(r"^[A-Za-z0-9._%+-]+@stud\.uni-corvinus\.hu$", email)
 # Log file name
 log_file = os.path.join(os.path.dirname(__file__), "email_log.txt")
 
-def log_email(email_address):
+EMAIL_USER = st.secrets["EMAIL_USER"]
+EMAIL_PASS = st.secrets["EMAIL_PASS"]
+
+def send_email_log(user_email):
+    msg = EmailMessage()
+    msg['Subject'] = "Új Excel letöltés – Corvinus App"
+    msg['From'] = "kovalikdberci@gmail.com"  # replace with your logging email
+    msg['To'] = "kovalikdberci@gmail.com"    # could be same as From
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    entry = f"{now} - {email_address}\n"
-    with open(log_file, "a", encoding="utf-8") as f:
-        f.write(entry)
+    msg.set_content(f"Letöltés történt:\n\nEmail: {user_email}\nIdőpont: {now}")
+
+    # Connect and send
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(EMAIL_USER, EMAIL_PASS)
+        smtp.send_message(msg)
+        print('message sent successfully')
 
 # Main logic
 if valid_email and agree:
@@ -50,7 +63,7 @@ if valid_email and agree:
     )
 
     if download_clicked:
-        log_email(email)
+        send_email_log(email)
         st.info("📑 Az email címed rögzítésre került a letöltéshez.")
 else:
     st.info("A letöltéshez érvényes email cím és a feltételek elfogadása szükséges.")
