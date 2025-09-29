@@ -32,8 +32,8 @@ EMAIL_PASS = st.secrets["EMAIL_PASS"]
 def send_email_log(user_email):
     msg = EmailMessage()
     msg['Subject'] = "Új Excel letöltés – Corvinus App"
-    msg['From'] = "kovalikdberci@gmail.com"  # replace with your logging email
-    msg['To'] = "kovalikdberci@gmail.com"    # could be same as From
+    msg['From'] = EMAIL_USER  # replace with your logging email
+    msg['To'] = "kovalikberci@gmail.com"    # could be same as From
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     msg.set_content(f"Letöltés történt:\n\nEmail: {user_email}\nIdőpont: {now}")
 
