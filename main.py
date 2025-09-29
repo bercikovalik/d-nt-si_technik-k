@@ -42,22 +42,20 @@ def send_email_log(user_email):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(EMAIL_USER, EMAIL_PASS)
         smtp.send_message(msg)
-        print('message sent successfully')
+    print('message sent successfully')
 
+
+excel_path = os.path.join(os.path.dirname(__file__), "munkalehetosegek_.xlsx")
 # Main logic
 if valid_email and agree:
     st.success("✅ Mostmár letöltheted az excelt!")
 
-    # Always recreate buffer
-    excel_buffer = io.BytesIO()
-    with pd.ExcelWriter(excel_buffer) as writer:
-        df.to_excel(writer, index=False, sheet_name="Adatok")
-    excel_buffer.seek(0)
+    with open(excel_path, "rb") as f:
+        excel_bytes = f.read()
 
-    # Download button (shows when ready)
     download_clicked = st.download_button(
         label="📥 Excel letöltése",
-        data=excel_buffer,
+        data=excel_bytes,
         file_name="osztondij_kalkulator.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
