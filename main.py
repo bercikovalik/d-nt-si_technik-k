@@ -10,7 +10,9 @@ from email.message import EmailMessage
 
 
 st.title("Corvinus Karrier Fesztivál Állások")
-
+st.markdown("Ezt az oldalt egy tárgyunkhoz hoztuk létre. Az email címed megadása után letöltheted az excelt"
+            "ami az rengeteg **álláshírdetést tartalmaz** az állásbörzén jelenlévő cégektől, így céltudatosan tudod"
+            "őket keresni:)")
 # Email input
 email = st.text_input("Add meg az egyetemi email címedet (@stud.uni-corvinus.hu):")
 
