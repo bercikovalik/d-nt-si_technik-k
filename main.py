@@ -8,10 +8,6 @@ import openpyxl
 import smtplib
 from email.message import EmailMessage
 
-df = pd.DataFrame({
-    "Name": ["Anna", "Bence", "Csilla"],
-    "Score": [90, 85, 92]
-})
 
 st.title("Corvinus Karrier Fesztivál Állások")
 
@@ -56,7 +52,7 @@ if valid_email and agree:
     download_clicked = st.download_button(
         label="📥 Excel letöltése",
         data=excel_bytes,
-        file_name="osztondij_kalkulator.xlsx",
+        file_name="munkalehetosegek.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
